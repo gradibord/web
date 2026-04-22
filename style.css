@@ -1,0 +1,303 @@
+/* ── Google Font ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #000;
+}
+
+/* ── Hero ────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* ── Center content ──────────────────────────────────────── */
+  z-index: 1;
+  flex-direction: column;
+  gap: calc(var(--logo-gap) * 2); /* half of GRADIBORD height */
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background: url('assets/img/background.png') center center / cover no-repeat;
+  z-index: -1;
+}
+
+.hero__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* ── Logo composition ────────────────────────────────────── */
+/*
+  Nabla is positioned absolutely to the left of the brand logo.
+  It is 2× the height of the brand logo and vertically centred
+  on the brand logo's midpoint.
+  Both logos share a common CSS custom property for the brand
+  logo height so the 2× ratio is always maintained.
+*/
+:root {
+  --brand-h: clamp(50px, 5vw, 110px);
+  --logo-gap: calc(var(--brand-h) * 0.5);   /* half of GRADIBORD height */
+  --btn-fs:   calc(var(--brand-h) * 0.2);  /* button font scales with logo */
+  --caption-fs: calc(var(--brand-h) * 0.16); /* caption font scales with logo */
+}
+
+.logo-group {
+  position: relative;     /* anchor for absolutely-positioned nabla */
+  z-index: 1;
+  display: inline-flex;   /* shrink-wrap to brand-logo width only */
+  align-items: center;
+}
+
+/* Nabla is pulled out of the centered flow and floats to the left */
+.nabla {
+  position: absolute;
+  right: 100%;
+  margin-right: clamp(1rem, 2.5vw, 2rem);  /* mirrors the original gap */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.nabla img {
+  height: calc(var(--brand-h) * 2);
+  width: auto;
+  display: block;
+}
+
+.brand-logo img {
+  height: var(--brand-h);
+  width: auto;
+  display: block;
+}
+
+/* ── Navigation buttons ──────────────────────────────── */
+.nav-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.75rem, 4vw, 4.5rem);
+    justify-content: center;
+    align-items: flex-start; /* align multiple nav-items consistently */
+}
+
+/* Group each button with its caption */
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.nav-btn {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;           /* always centre the label */
+    color: #fff;
+    letter-spacing: 0.18em;
+    font-size: var(--btn-fs);
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 0.65em 2em;
+    border: 1.5px solid rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    cursor: pointer;
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    white-space: nowrap;
+}
+
+.nav-btn:hover,
+.nav-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: #3a3a3a;
+  color: #3a3a3a;
+  outline: none;
+}
+
+/* ── "In Development" caption ────────────────────────────── */
+.btn-caption {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;                /* Regular */
+  font-size: var(--caption-fs);
+  color: #D97925;
+  letter-spacing: 0.08em;
+  text-align: center;
+  margin: 0; /* spacing controlled by .nav-item gap */
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  padding: 2rem;
+  text-align: center;
+  color: #d4d4d4;
+  font-size: 0.9rem;
+}
+
+/* ── Stacked logo: nabla moves above GRADIBORD when it would clip (≤ 768 px) ── */
+@media (max-width: 768px) {
+  :root {
+    --brand-h: clamp(40px, 10vw, 80px);
+    --logo-gap:    calc(var(--brand-h) * 0.5);
+    --btn-fs:      calc(var(--brand-h) * 0.18);
+    --caption-fs:  calc(var(--brand-h) * 0.13);
+  }
+
+  /* Nabla re-enters the flow and sits above GRADIBORD */
+  .nabla {
+    position: static;
+    transform: none;
+    margin-right: 0;
+  }
+
+  .logo-group {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--logo-gap);
+  }
+}
+
+/* ── Mobile (≤ 600 px) ───────────────────────────────────── */
+@media (max-width: 600px) {
+
+  :root {
+    --brand-h:    42px;
+    --logo-gap:   calc(var(--brand-h) * 0.5);  /* = 21px */
+    --btn-fs:     calc(var(--brand-h) * 0.18); /* ≈ 7.6px – floor below */
+    --caption-fs: calc(var(--brand-h) * 0.13); /* ≈ 5.5px – floor below */
+  }
+
+  .hero {
+    height: auto;
+    min-height: 100svh;
+    padding: 2.5rem 1.25rem 3rem;
+  }
+
+  /* Stack buttons vertically on phone */
+  .nav-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--logo-gap);
+  }
+
+  .nav-btn {
+    /* minimum readable size on small screens */
+    font-size: max(var(--btn-fs), 0.75rem);
+    min-width: 10em;
+    width: auto;
+    max-width: 280px;
+    text-align: center;
+  }
+
+  .btn-caption {
+    font-size: max(var(--caption-fs), 0.6rem);
+  }
+}
+
+/* ── Sub page ──────────────────────────────────────── */
+body.sub-page {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body.sub-page header {
+  text-align: center;
+  padding: 2rem;
+}
+
+body.sub-page header img {
+  max-width: 300px;
+  height: auto;
+}
+
+body.sub-page main {
+  font-family: 'Inter', sans-serif;
+  max-width: 800px;
+  width: 100%;
+  height: fit-content;
+  margin: 0 auto;
+  padding: 2rem; /* bottom padding keeps last item clear of footer */
+  color: #fff;
+
+  /* Glassmorphism-inspired styling */
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 0px 0px rgba(255, 255, 255, 0);
+
+}
+
+body.sub-page main h1 {
+  text-align: center;
+  padding-bottom: 2rem;
+  font-size: 1.5em;
+  letter-spacing: 0.1em;
+  color: #fff;
+}
+
+body.sub-page main li {
+  margin-bottom: 2rem;
+}
+
+body.sub-page main ol {
+  margin-bottom: 4rem;
+}
+
+body.sub-page main img {
+  display: flex;
+  margin: 2rem auto 0 auto;
+  max-width: 4em;
+  height: auto;
+}
+
+/* Override the global fixed footer for this page */
+body.sub-page footer {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+  color: #d4d4d4;
+  font-size: 0.9rem;
+
+  margin-top: auto; /* push footer to bottom when content is short */
+}
