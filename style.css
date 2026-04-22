@@ -280,6 +280,10 @@ body.sub-page main ol {
   margin-bottom: 4rem;
 }
 
+body.sub-page main ul li {
+  margin: 0.25rem 0 0.5rem 2rem;
+}
+
 body.sub-page main img {
   display: flex;
   margin: 2rem auto 0 auto;
