@@ -38,7 +38,7 @@ body {
 .hero__bg {
   position: absolute;
   inset: 0;
-  background: url('assets/img/background.png') center center / cover no-repeat;
+  background: url('assets/img/background.webp') center center / cover no-repeat;
   z-index: -1;
 }
 
